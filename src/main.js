@@ -1,4 +1,18 @@
 // query selector variables go here 👇
+var posterImage = document.querySelector(".poster-img");
+var posterTitle = document.querySelector(".poster-title");
+var posterQuote = document.querySelector(".poster-quote");
+var showRandomButton = document.querySelector(".show-random");
+var mainPoster = document.querySelector(".main-poster");
+var posterForm = document.querySelector(".poster-form");
+var showFormButton = document.querySelector(".show-form");
+var savedPostersPage = document.querySelector(".saved-posters");
+var showSavedButton = document.querySelector(".show-saved");
+// will need more of these seven all together, four buttons, two posters and form
+// show-save, back-to-main, show-main(take me back), saved poster
+
+
+
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -103,6 +117,12 @@ var savedPosters = [];
 var currentPoster;
 
 // event listeners go here 👇
+// window.onload = displayRandomPoster;
+window.addEventListener('load', displayRandomPoster);
+showRandomButton.addEventListener("click", displayRandomPoster);
+showFormButton.addEventListener("click", displayHiddenForm);
+showSavedButton.addEventListener("click", displaySavedPoster)
+// need eventlisteners for all four buttons needs to trigger the function that will toggle the hidden off
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -116,4 +136,24 @@ function createPoster(imageURL, title, quote) {
     imageURL: imageURL, 
     title: title, 
     quote: quote}
+}
+
+function displayRandomPoster() {
+  const randomImage = images[getRandomIndex(images)];
+  const randomTitle = titles[getRandomIndex(titles)];
+  const randomQuote = quotes[getRandomIndex(quotes)];
+  const newRandomPoster = createPoster(randomImage, randomTitle, randomQuote)
+  posterImage.src = randomImage;
+  posterTitle.innerText = randomTitle;
+  posterQuote.innerText = randomQuote;
+}
+
+function displayHiddenForm() {
+  mainPoster.classList.add("hidden");
+  posterForm.classList.remove("hidden");
+}
+
+function displaySavedPoster() {
+  mainPoster.classList.add("hidden");
+  savedPostersPage.classList.remove("hidden");
 }
