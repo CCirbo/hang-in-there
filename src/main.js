@@ -1,15 +1,22 @@
 // query selector variables go here 👇
-var posterImage = document.querySelector(".poster-img");
-var posterTitle = document.querySelector(".poster-title");
-var posterQuote = document.querySelector(".poster-quote");
-var showRandomButton = document.querySelector(".show-random");
-var mainPoster = document.querySelector(".main-poster");
-var posterForm = document.querySelector(".poster-form");
-var showFormButton = document.querySelector(".show-form");
-var savedPostersPage = document.querySelector(".saved-posters");
-var showSavedButton = document.querySelector(".show-saved");
-// will need more of these seven all together, four buttons, two posters and form
-// show-save, back-to-main, show-main(take me back), saved poster
+const posterImage = document.querySelector(".poster-img");
+const posterTitle = document.querySelector(".poster-title");
+const posterQuote = document.querySelector(".poster-quote");
+const showRandomButton = document.querySelector(".show-random");
+const mainPoster = document.querySelector(".main-poster");
+const posterForm = document.querySelector(".poster-form");
+const showFormButton = document.querySelector(".show-form");
+const savedPostersPage = document.querySelector(".saved-posters");
+const showSavedButton = document.querySelector(".show-saved");
+const showMainPage = document.querySelector('.show-main');
+const showBackToMain = document.querySelector('.back-to-main');
+
+const showFormMyPoster = document.querySelector(".make-poster")
+const formPosterImage = document.querySelector("#poster-image-url");
+const formPosterTitle = document.querySelector("#poster-title" );
+const formPosterQuote = document.querySelector("#poster-quote");
+
+
 
 
 
@@ -121,7 +128,19 @@ var currentPoster;
 window.addEventListener('load', displayRandomPoster);
 showRandomButton.addEventListener("click", displayRandomPoster);
 showFormButton.addEventListener("click", displayHiddenForm);
-showSavedButton.addEventListener("click", displaySavedPoster)
+showSavedButton.addEventListener("click", displaySavedPoster);
+showMainPage.addEventListener('click', displayMainPoster);
+showBackToMain.addEventListener('click', displayMainPage);
+showFormMyPoster.addEventListener('click', function(event){
+  event.preventDefault();
+  // the values from the inputs to create a new, poster object and save it as the value of the currentPoster global variable (part of your data model)
+// Save the submitted data into the respective arrays (image URL into the images array, etc - all part of your data model) so that future random posters can use the user-created data
+  createNewUserPoster();
+// Change back to the main poster view (hiding the form view again) BUT currentPoster variable - part of your data model) to display the newly created poster image, title, and quote in the main view on the DOM
+  updateMainPoster();
+});
+
+
 // need eventlisteners for all four buttons needs to trigger the function that will toggle the hidden off
 
 // functions and event handlers go here 👇
@@ -157,3 +176,33 @@ function displaySavedPoster() {
   mainPoster.classList.add("hidden");
   savedPostersPage.classList.remove("hidden");
 }
+
+function displayMainPoster() {
+  mainPoster.classList.remove("hidden");
+  posterForm.classList.add("hidden");
+}
+
+function displayMainPage() {
+  mainPoster.classList.remove("hidden");
+  savedPostersPage.classList.add("hidden");
+}
+
+function createNewUserPoster() {
+  currentPoster = {
+    title: formPosterTitle.value,
+    imageUrl: formPosterImage.value, 
+    quote: formPosterQuote.value,
+  };
+  // console.log(currentPoster);
+  images.push(currentPoster.imageUrl);
+  titles.push(currentPoster.title);
+  quotes.push(currentPoster.quote);
+}
+
+function updateMainPoster() {
+  displayMainPoster();
+  posterImage.src = currentPoster.imageUrl;
+  posterTitle.innerText = currentPoster.title;
+  posterQuote.innerText = currentPoster.quote;
+}
+
