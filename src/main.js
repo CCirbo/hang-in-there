@@ -384,7 +384,7 @@ function displayUnmotivationalPoster() {
   for (let i = 0; i < cleanedUnmotivationalPosters.length; i++) {
     const poster = cleanedUnmotivationalPosters[i];
     unmotivationalGrid.insertAdjacentHTML(
-      "beforeend", `<div class="mini-poster">
+      "beforeend", `<div class="mini-poster un-mini-poster">
       <img src="${poster.imageUrl}" alt="${poster.title}">
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>
