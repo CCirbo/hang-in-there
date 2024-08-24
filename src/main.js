@@ -3,6 +3,7 @@ const posterImage = document.querySelector(".poster-img");
 const posterTitle = document.querySelector(".poster-title");
 const posterQuote = document.querySelector(".poster-quote");
 const showRandomButton = document.querySelector(".show-random");
+
 const mainPoster = document.querySelector(".main-poster");
 const posterForm = document.querySelector(".poster-form");
 const showFormButton = document.querySelector(".show-form");
@@ -10,16 +11,19 @@ const savedPostersPage = document.querySelector(".saved-posters");
 const showSavedButton = document.querySelector(".show-saved");
 const showMainPage = document.querySelector('.show-main');
 const showBackToMain = document.querySelector('.back-to-main');
+const showUBackToMain = document.querySelector('.unmotivational .back-to-main');
 
 const showFormMyPoster = document.querySelector(".make-poster")
 const formPosterImage = document.querySelector("#poster-image-url");
 const formPosterTitle = document.querySelector("#poster-title" );
 const formPosterQuote = document.querySelector("#poster-quote");
 
+const savePosterButton = document.querySelector(".save-poster");
+const savedPostersGrid = document.querySelector(".saved-posters-grid");
 
-
-
-
+const showUnmotivationalButton = document.querySelector(".show-unmotivational")
+const unmotivational = document.querySelector(".unmotivational");
+const unmotivationalGrid = document.querySelector(".unmotivational-posters-grid")
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -120,6 +124,130 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
+
+const unmotivationalPosters = [
+  {
+    name: "FAILURE",
+    description: "Why bother trying? It's probably not worth it.",
+    price: 68.00,
+    year: 2019,
+    vintage: true,
+    img_url: "./assets/failure.jpg",
+  },
+  {
+    name: "MEDIOCRITY",
+    description: "Dreams are just that—dreams.",
+    price: 127.00,
+    year: 2021,
+    vintage: false,
+    img_url: "./assets/mediocrity.jpg",
+  },
+  {
+    name: "REGRET",
+    description: "Hard work rarely pays off.",
+    price: 89.00,
+    year: 2018,
+    vintage: true,
+    img_url:  "./assets/regret.jpg",
+  },
+  {
+    name: "FUTILITY",
+    description: "You're not good enough.",
+    price: 150.00,
+    year: 2016,
+    vintage: false,
+    img_url:  "./assets/futility.jpg",
+  },
+  {
+    name: "DEFEAT",
+    description: "It's too late to start now.",
+    price: 35.00,
+    year: 2023,
+    vintage: false,
+    img_url:  "./assets/defeat.jpg",
+  },
+  {
+    name: "HOPELESSNESS",
+    description: "Stay in your comfort zone; it's safer.",
+    price: 112.00,
+    year: 2020,
+    vintage: true,
+    img_url: "./assets/hopelessness.jpg",
+  },
+  {
+    name: "LAZINESS",
+    description: "You can't change anything.",
+    price: 25.00,
+    year: 2022,
+    vintage: false,
+    img_url: "./assets/laziness.jpg",
+  },
+  {
+    name: "PROCRASTINATION",
+    description: "Better to avoid failure by not trying at all.",
+    price: 48.00,
+    year: 2017,
+    vintage: true,
+    img_url: "./assets/procrastination.jpg",
+  },
+  {
+    name: "DESPAIR",
+    description: "Let someone else do it; you’ll just mess it up.",
+    price: 73.00,
+    year: 2015,
+    vintage: false,
+    img_url: "./assets/despair.jpg",
+  },
+  {
+    name: "NEGLECT",
+    description: "Happiness is overrated.",
+    price: 160.00,
+    year: 2019,
+    vintage: true,
+    img_url: "./assets/neglect.jpg",
+  },
+  {
+    name: "FEAR",
+    description: "Giving up is always an option.",
+    price: 91.00,
+    year: 2014,
+    vintage: false,
+    img_url: "./assets/fear.jpg",
+  },
+  {
+    name: "APATHY",
+    description: "No one cares about your effort.",
+    price: 110.00,
+    year: 2016,
+    vintage: true,
+    img_url: "./assets/apathy.jpg",
+  },
+  {
+    name: "MISERY",
+    description: "Why take risks when you can stay stagnant?",
+    price: 55.00,
+    year: 2021,
+    vintage: false,
+    img_url: "./assets/misery.jpg",
+  },
+  {
+    name: "BLAME",
+    description: "Expect disappointment and you'll never be disappointed.",
+    price: 39.00,
+    year: 2017,
+    vintage: true,
+    img_url: "./assets/blame.jpg",
+  },
+  {
+    name: "DOUBT",
+    description: "Success is for other people, not you.",
+    price: 140.00,
+    year: 2020,
+    vintage: false,
+    img_url: "./assets/doubt.jpg",
+  }
+];
+
 var savedPosters = [];
 var currentPoster;
 
@@ -129,16 +257,27 @@ window.addEventListener('load', displayRandomPoster);
 showRandomButton.addEventListener("click", displayRandomPoster);
 showFormButton.addEventListener("click", displayHiddenForm);
 showSavedButton.addEventListener("click", displaySavedPoster);
+
 showMainPage.addEventListener('click', displayMainPoster);
+
 showBackToMain.addEventListener('click', displayMainPage);
+showUBackToMain.addEventListener('click', displayUMainPage);
+// showBackToMain.forEach(function(button) {
+//   button.addEventListener('click', displayMainPage);
+// });
+
 showFormMyPoster.addEventListener('click', function(event){
   event.preventDefault();
-  // the values from the inputs to create a new, poster object and save it as the value of the currentPoster global variable (part of your data model)
-// Save the submitted data into the respective arrays (image URL into the images array, etc - all part of your data model) so that future random posters can use the user-created data
   createNewUserPoster();
-// Change back to the main poster view (hiding the form view again) BUT currentPoster variable - part of your data model) to display the newly created poster image, title, and quote in the main view on the DOM
-  updateMainPoster();
 });
+
+savePosterButton.addEventListener('click', function(){
+  console.log("saved in array", savedPosters)
+   savePoster();
+})
+
+showUnmotivationalButton.addEventListener('click', displayUnmotivationalPoster);
+
 
 
 // need eventlisteners for all four buttons needs to trigger the function that will toggle the hidden off
@@ -149,22 +288,24 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
-function createPoster(imageURL, title, quote) {
+function createPoster(imageUrl, title, quote) {
   return {
     id: Date.now(), 
-    imageURL: imageURL, 
+    imageUrl: imageUrl, 
     title: title, 
     quote: quote}
 }
+
 
 function displayRandomPoster() {
   const randomImage = images[getRandomIndex(images)];
   const randomTitle = titles[getRandomIndex(titles)];
   const randomQuote = quotes[getRandomIndex(quotes)];
   const newRandomPoster = createPoster(randomImage, randomTitle, randomQuote)
-  posterImage.src = randomImage;
-  posterTitle.innerText = randomTitle;
-  posterQuote.innerText = randomQuote;
+  posterImage.src = newRandomPoster.imageUrl
+  posterTitle.innerText = newRandomPoster.title
+  posterQuote.innerText = newRandomPoster.quote
+  currentPoster = newRandomPoster;
 }
 
 function displayHiddenForm() {
@@ -172,10 +313,23 @@ function displayHiddenForm() {
   posterForm.classList.remove("hidden");
 }
 
+
+
 function displaySavedPoster() {
   mainPoster.classList.add("hidden");
   savedPostersPage.classList.remove("hidden");
+  savedPostersGrid.innerHTML = '';
+  for (var i = 0; i < savedPosters.length; i++) {
+    var poster = savedPosters[i];
+    savedPostersGrid.insertAdjacentHTML(
+      "beforeend", `<div class="mini-poster">
+      <img src="${poster.imageUrl}" alt="${poster.title}">
+      <h2>${poster.title}</h2>
+      <h4>${poster.quote}</h4>
+      </div>`);
+  }
 }
+  
 
 function displayMainPoster() {
   mainPoster.classList.remove("hidden");
@@ -186,17 +340,24 @@ function displayMainPage() {
   mainPoster.classList.remove("hidden");
   savedPostersPage.classList.add("hidden");
 }
+function displayUMainPage() {
+  mainPoster.classList.remove("hidden");
+  unmotivational.classList.add("hidden");
+}
+
 
 function createNewUserPoster() {
-  currentPoster = {
-    title: formPosterTitle.value,
-    imageUrl: formPosterImage.value, 
-    quote: formPosterQuote.value,
-  };
-  // console.log(currentPoster);
+  currentPoster = createPoster(
+    formPosterImage.value,
+    formPosterTitle.value,
+    formPosterQuote.value,
+  );
+
+  console.log("New Poster Created:", currentPoster);
   images.push(currentPoster.imageUrl);
   titles.push(currentPoster.title);
   quotes.push(currentPoster.quote);
+  updateMainPoster();
 }
 
 function updateMainPoster() {
@@ -204,5 +365,40 @@ function updateMainPoster() {
   posterImage.src = currentPoster.imageUrl;
   posterTitle.innerText = currentPoster.title;
   posterQuote.innerText = currentPoster.quote;
+  console.log("Main Poster Updated");
 }
 
+function savePoster() {
+  var isDuplicate = false;
+  for (var i = 0; i < savedPosters.length; i++) {
+    if (
+      savedPosters[i].imageUrl === currentPoster.imageUrl &&
+      savedPosters[i].title === currentPoster.title &&
+      savedPosters[i].quote === currentPoster.quote
+    ) {
+      isDuplicate = true;
+    }
+  }
+  if (!isDuplicate) {
+    savedPosters.push(currentPoster);
+  }
+}
+
+function displayUnmotivationalPoster() {
+  mainPoster.classList.add("hidden");
+  unmotivational.classList.remove("hidden");
+  unmotivationalGrid.innerHTML = '';
+  for (var i = 0; i < unmotivationalPosters.length; i++) {
+    var poster = unmotivationalPosters[i];
+    unmotivationalGrid.insertAdjacentHTML(
+      "beforeend", `<div class="mini-poster">
+      <img src="${poster.img_url}" alt="${poster.title}">
+      <h2>${poster.name}</h2>
+      <h4>${poster.description}</h4>
+      </div>`);
+  }
+ 
+}
+
+
+// https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg
