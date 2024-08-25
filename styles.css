@@ -157,3 +157,7 @@ button:hover {
 .un-mini-poster {
   flex: 1;
 } 
+
+.purple {
+  background-color: purple;
+}

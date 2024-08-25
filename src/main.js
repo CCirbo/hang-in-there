@@ -23,6 +23,8 @@ const savedPostersBackToMainButton = document.querySelector('.back-to-main');
 const unmotivationalBackToMainButton = document.querySelector('.unmotivational .back-to-main');
 const unmotivational = document.querySelector(".unmotivational");
 const unmotivationalGrid = document.querySelector(".unmotivational-posters-grid");
+const unmotivationalMiniPoster = document.querySelector(".unmotivational");
+
 
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
@@ -257,6 +259,10 @@ nmindGoToMainPageFormButton.addEventListener('click', displayMainPosterSite);
 savedPostersBackToMainButton.addEventListener('click', displayMainPage);
 unmotivationalBackToMainButton.addEventListener('click', displayUMainPage);
 unmotivationalPButton.addEventListener('click', displayUnmotivationalPoster);
+unmotivationalMiniPoster.addEventListener('dblclick', removeUnmotivationalPoster);
+
+
+
 
 showMyPosterFormButton.addEventListener('click', function(event){
   event.preventDefault();
@@ -266,6 +272,8 @@ showMyPosterFormButton.addEventListener('click', function(event){
 saveThisPosterButton.addEventListener('click', function(){
   savePoster();
 });
+
+
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -397,5 +405,19 @@ function clearGrid(element) {
   element.innerHTML = '';
 }
 
+// function removeUnmotivationalPoster(event) {
+//   if (event.target.classList.contains('mini-poster')){
+//     console.log('clicked on a box')
+//     // event.target.classList.toggle('purple')
+//     event.target.remove()
+//   } 
+// }
+function removeUnmotivationalPoster(event) {
+  const poster = event.target.closest('.mini-poster');
+  if (poster) {
+    console.log('clicked on a mini-poster');
+    poster.remove();
+  }
+}
 
 // https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg
