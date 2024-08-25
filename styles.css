@@ -149,15 +149,12 @@ button:hover {
 .unmotivational-posters-grid {
   display: flex;
   grid-gap: 15px;
-  padding: 20px;
+  padding: 10px;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  flex: 1;
 } 
 
 .un-mini-poster {
   flex: 1;
 } 
-
-.purple {
-  background-color: purple;
-}

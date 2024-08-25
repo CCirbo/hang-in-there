@@ -1,4 +1,3 @@
-// query selector variables go here 👇
 const posterImage = document.querySelector(".poster-img");
 const posterTitle = document.querySelector(".poster-title");
 const posterQuote = document.querySelector(".poster-quote");
@@ -26,8 +25,6 @@ const unmotivationalGrid = document.querySelector(".unmotivational-posters-grid"
 const unmotivationalMiniPoster = document.querySelector(".unmotivational");
 
 
-// we've provided you with some data to work with 👇
-// tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 let images = [
   "./assets/bees.jpg",
   "./assets/bridge.jpg",
@@ -250,7 +247,7 @@ let unmotivationalPosters = [
 let savedPosters = [];
 let currentPoster;
 
-// event listeners go here 👇
+
 window.addEventListener('load', displayRandomPoster);
 showRandomPButton.addEventListener("click", displayRandomPoster);
 makeYourOPButton.addEventListener("click", displayHiddenForm);
@@ -260,23 +257,13 @@ savedPostersBackToMainButton.addEventListener('click', displayMainPage);
 unmotivationalBackToMainButton.addEventListener('click', displayUMainPage);
 unmotivationalPButton.addEventListener('click', displayUnmotivationalPoster);
 unmotivationalMiniPoster.addEventListener('dblclick', removeUnmotivationalPoster);
-
-
-
-
+saveThisPosterButton.addEventListener('click', savePoster);
 showMyPosterFormButton.addEventListener('click', function(event){
   event.preventDefault();
   createNewUserPoster();
 });
 
-saveThisPosterButton.addEventListener('click', function(){
-  savePoster();
-});
 
-
-
-// functions and event handlers go here 👇
-// (we've provided two to get you started)!
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
@@ -312,17 +299,17 @@ function displayHiddenForm() {
 function displaySavedPoster() {
   toggleViewOnOff(savedPostersPage, mainPosterSite)
   clearGrid(savedPostersGrid)
-
-  for (let i = 0; i < savedPosters.length; i++) {
-    const poster = savedPosters[i];
-    savedPostersGrid.insertAdjacentHTML(
-      "beforeend", 
-     `<div class="mini-poster">
-      <img src="${poster.imageUrl}" alt="${poster.title}">
-      <h2>${poster.title}</h2>
-      <h4>${poster.quote}</h4>
-      </div>`);
-  }
+  creatingMiniPosters(savedPosters, savedPostersGrid);
+  // for (let i = 0; i < savedPosters.length; i++) {
+  //   const poster = savedPosters[i];
+  //   savedPostersGrid.insertAdjacentHTML(
+  //     "beforeend", 
+  //    `<div class="mini-poster">
+  //     <img src="${poster.imageUrl}" alt="${poster.title}">
+  //     <h2>${poster.title}</h2>
+  //     <h4>${poster.quote}</h4>
+  //     </div>`);
+  // }
 }
 
 function displayMainPosterSite() {
@@ -389,15 +376,29 @@ function cleanData(dataArray) {
 function displayUnmotivationalPoster() {
   toggleViewOnOff(unmotivational, mainPosterSite)
   const cleanedUnmotivationalPosters = cleanData(unmotivationalPosters);
-  for (let i = 0; i < cleanedUnmotivationalPosters.length; i++) {
-    const poster = cleanedUnmotivationalPosters[i];
-    unmotivationalGrid.insertAdjacentHTML(
-      "beforeend", `<div class="mini-poster un-mini-poster">
+  creatingMiniPosters(cleanedUnmotivationalPosters, unmotivationalGrid);
+  // for (let i = 0; i < cleanedUnmotivationalPosters.length; i++) {
+  //   const poster = cleanedUnmotivationalPosters[i];
+  //   unmotivationalGrid.insertAdjacentHTML(
+  //     "beforeend", `<div class="mini-poster un-mini-poster">
+  //     <img src="${poster.imageUrl}" alt="${poster.title}">
+  //     <h2>${poster.title}</h2>
+  //     <h4>${poster.quote}</h4>
+  //     </div>`
+  //   );
+  // }
+}
+
+function creatingMiniPosters(array, grid) {
+  for (let i = 0; i < array.length; i++) {
+    const poster = array[i];
+    grid.insertAdjacentHTML(
+      "beforeend", 
+     `<div class="mini-poster un-mini-poster">
       <img src="${poster.imageUrl}" alt="${poster.title}">
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>
-      </div>`
-    );
+      </div>`);
   }
 }
 
@@ -405,13 +406,6 @@ function clearGrid(element) {
   element.innerHTML = '';
 }
 
-// function removeUnmotivationalPoster(event) {
-//   if (event.target.classList.contains('mini-poster')){
-//     console.log('clicked on a box')
-//     // event.target.classList.toggle('purple')
-//     event.target.remove()
-//   } 
-// }
 function removeUnmotivationalPoster(event) {
   const poster = event.target.closest('.mini-poster');
   if (poster) {
