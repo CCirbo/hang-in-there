@@ -281,9 +281,7 @@ function displayRandomPoster() {
   const randomTitle = titles[getRandomIndex(titles)];
   const randomQuote = quotes[getRandomIndex(quotes)];
   const newRandomPoster = createPoster(randomImage, randomTitle, randomQuote)
-  posterImage.src = newRandomPoster.imageUrl
-  posterTitle.innerText = newRandomPoster.title
-  posterQuote.innerText = newRandomPoster.quote
+  updateCurrentPoster(newRandomPoster)
   currentPoster = newRandomPoster;
 }
 
@@ -297,31 +295,21 @@ function displayHiddenForm() {
 }
 
 function displaySavedPoster() {
-  toggleViewOnOff(savedPostersPage, mainPosterSite)
-  clearGrid(savedPostersGrid)
+  toggleViewOnOff(savedPostersPage, mainPosterSite);
+  clearGrid(savedPostersGrid);
   creatingMiniPosters(savedPosters, savedPostersGrid);
-  // for (let i = 0; i < savedPosters.length; i++) {
-  //   const poster = savedPosters[i];
-  //   savedPostersGrid.insertAdjacentHTML(
-  //     "beforeend", 
-  //    `<div class="mini-poster">
-  //     <img src="${poster.imageUrl}" alt="${poster.title}">
-  //     <h2>${poster.title}</h2>
-  //     <h4>${poster.quote}</h4>
-  //     </div>`);
-  // }
 }
 
 function displayMainPosterSite() {
-  toggleViewOnOff(mainPosterSite, makeYourOPForm)
+  toggleViewOnOff(mainPosterSite, makeYourOPForm);
 }
 
 function displayMainPage() {
-  toggleViewOnOff(mainPosterSite, savedPostersPage)
+  toggleViewOnOff(mainPosterSite, savedPostersPage);
 }
 
 function displayUMainPage() {
-  toggleViewOnOff(mainPosterSite, unmotivational)
+  toggleViewOnOff(mainPosterSite, unmotivational);
 }
 
 function createNewUserPoster() {
@@ -338,9 +326,13 @@ function createNewUserPoster() {
 
 function updateMainPosterSite() {
   displayMainPosterSite();
-  posterImage.src = currentPoster.imageUrl;
-  posterTitle.innerText = currentPoster.title;
-  posterQuote.innerText = currentPoster.quote;
+  updateCurrentPoster(currentPoster);
+}
+
+function updateCurrentPoster(newCreatedPoster) {
+  posterImage.src = newCreatedPoster.imageUrl
+  posterTitle.innerText = newCreatedPoster.title
+  posterQuote.innerText = newCreatedPoster.quote
 }
 
 function savePoster() {
@@ -374,19 +366,9 @@ function cleanData(dataArray) {
 }
 
 function displayUnmotivationalPoster() {
-  toggleViewOnOff(unmotivational, mainPosterSite)
+  toggleViewOnOff(unmotivational, mainPosterSite);
   const cleanedUnmotivationalPosters = cleanData(unmotivationalPosters);
   creatingMiniPosters(cleanedUnmotivationalPosters, unmotivationalGrid);
-  // for (let i = 0; i < cleanedUnmotivationalPosters.length; i++) {
-  //   const poster = cleanedUnmotivationalPosters[i];
-  //   unmotivationalGrid.insertAdjacentHTML(
-  //     "beforeend", `<div class="mini-poster un-mini-poster">
-  //     <img src="${poster.imageUrl}" alt="${poster.title}">
-  //     <h2>${poster.title}</h2>
-  //     <h4>${poster.quote}</h4>
-  //     </div>`
-  //   );
-  // }
 }
 
 function creatingMiniPosters(array, grid) {
