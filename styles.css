@@ -105,13 +105,12 @@ button:hover {
 }
 
 /* ~~~~~ SAVED POSTER SECTION ~~~~~ */
-.saved-posters,
-.unmotivational {
+.unmotivational,
+.saved-posters {
   padding: 40px;
 }
 
-.saved-posters-grid,
-.unmotivational-posters-grid {
+.saved-posters-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
@@ -146,3 +145,16 @@ button:hover {
   margin-bottom: 10px;
   text-transform: uppercase;
 }
+
+.unmotivational-posters-grid {
+  display: flex;
+  grid-gap: 15px;
+  padding: 10px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* flex: 1; */
+} 
+
+.un-mini-poster {
+  flex: 1;
+} 
