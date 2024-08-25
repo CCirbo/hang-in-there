@@ -152,7 +152,7 @@ button:hover {
   padding: 10px;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  flex: 1;
+  /* flex: 1; */
 } 
 
 .un-mini-poster {

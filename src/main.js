@@ -263,7 +263,6 @@ showMyPosterFormButton.addEventListener('click', function(event){
   createNewUserPoster();
 });
 
-
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
@@ -283,11 +282,6 @@ function displayRandomPoster() {
   const newRandomPoster = createPoster(randomImage, randomTitle, randomQuote)
   updateCurrentPoster(newRandomPoster)
   currentPoster = newRandomPoster;
-}
-
-function toggleViewOnOff(showView, hideView) {
-  showView.classList.remove("hidden");
-  hideView.classList.add("hidden");
 }
 
 function displayHiddenForm() {
@@ -335,33 +329,30 @@ function updateCurrentPoster(newCreatedPoster) {
   posterQuote.innerText = newCreatedPoster.quote
 }
 
+
 function savePoster() {
-  const isDuplicate = false;
-  for (let i = 0; i < savedPosters.length; i++) {
-    if (
-      savedPosters[i].imageUrl === currentPoster.imageUrl &&
-      savedPosters[i].title === currentPoster.title &&
-      savedPosters[i].quote === currentPoster.quote
-    ) {
-      isDuplicate = true;
-    }
-  }
+  let isDuplicate = savedPosters.some(function(poster) { 
+    return (
+      poster.imageUrl === currentPoster.imageUrl &&
+      poster.title === currentPoster.title &&
+      poster.quote === currentPoster.quote
+    );
+  });
   if (!isDuplicate) {
-    savedPosters.push(currentPoster);
+  savedPosters.push(currentPoster);
   }
 }
 
 function cleanData(dataArray) {
   const cleanedData = []
-  for (let i = 0; i < dataArray.length; i++) {
-  const data = dataArray[i];
-  const cleanedPoster = createPoster(
-    data.imageUrl || data.img_url,
-    data.title || data.name,
-    data.quote || data.description
-  );
+  dataArray.forEach(function(data) {
+    const cleanedPoster = createPoster(
+      data.imageUrl || data.img_url,
+      data.title || data.name,
+      data.quote || data.description
+    );
     cleanedData.push(cleanedPoster);
-  }
+  });
   return cleanedData;
 }
 
@@ -372,8 +363,7 @@ function displayUnmotivationalPoster() {
 }
 
 function creatingMiniPosters(array, grid) {
-  for (let i = 0; i < array.length; i++) {
-    const poster = array[i];
+  array.forEach(function(poster) {
     grid.insertAdjacentHTML(
       "beforeend", 
      `<div class="mini-poster un-mini-poster">
@@ -381,7 +371,12 @@ function creatingMiniPosters(array, grid) {
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>
       </div>`);
-  }
+  });
+}
+
+function toggleViewOnOff(showView, hideView) {
+  showView.classList.remove("hidden");
+  hideView.classList.add("hidden");
 }
 
 function clearGrid(element) {
@@ -391,7 +386,6 @@ function clearGrid(element) {
 function removeUnmotivationalPoster(event) {
   const poster = event.target.closest('.mini-poster');
   if (poster) {
-    console.log('clicked on a mini-poster');
     poster.remove();
   }
 }
