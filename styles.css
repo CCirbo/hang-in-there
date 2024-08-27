@@ -152,9 +152,17 @@ button:hover {
   padding: 10px;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  /* flex: 1; */
 } 
 
 .un-mini-poster {
   flex: 1;
 } 
+
+.mini-poster-grey {
+  background: grey;
+  border-radius: 15px;
+}
+
+.mini-poster-grey h2 {
+  color: black
+}

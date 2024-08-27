@@ -306,6 +306,17 @@ function displayUMainPage() {
   toggleViewOnOff(mainPosterSite, unmotivational);
 }
 
+function displayUnmotivationalPoster() {
+  toggleViewOnOff(unmotivational, mainPosterSite);
+  const cleanedUnmotivationalPosters = cleanData(unmotivationalPosters);
+  creatingMiniPosters(cleanedUnmotivationalPosters, unmotivationalGrid, true);
+}
+
+function toggleViewOnOff(showView, hideView) {
+  showView.classList.remove("hidden");
+  hideView.classList.add("hidden");
+}
+
 function createNewUserPoster() {
   currentPoster = createPoster(
     makeYourOPFormImage.value,
@@ -328,7 +339,6 @@ function updateCurrentPoster(newCreatedPoster) {
   posterTitle.innerText = newCreatedPoster.title
   posterQuote.innerText = newCreatedPoster.quote
 }
-
 
 function savePoster() {
   let isDuplicate = savedPosters.some(function(poster) { 
@@ -356,17 +366,12 @@ function cleanData(dataArray) {
   return cleanedData;
 }
 
-function displayUnmotivationalPoster() {
-  toggleViewOnOff(unmotivational, mainPosterSite);
-  const cleanedUnmotivationalPosters = cleanData(unmotivationalPosters);
-  creatingMiniPosters(cleanedUnmotivationalPosters, unmotivationalGrid);
-}
-
-function creatingMiniPosters(array, grid) {
+function creatingMiniPosters(array, grid, changeToGreyBackground = false) {
   array.forEach(function(poster) {
+    let backgroundClass = changeToGreyBackground ? "mini-poster-grey" : "";
     grid.insertAdjacentHTML(
       "beforeend", 
-     `<div class="mini-poster un-mini-poster">
+     `<div class="mini-poster un-mini-poster ${backgroundClass}">
       <img src="${poster.imageUrl}" alt="${poster.title}">
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>
@@ -374,13 +379,8 @@ function creatingMiniPosters(array, grid) {
   });
 }
 
-function toggleViewOnOff(showView, hideView) {
-  showView.classList.remove("hidden");
-  hideView.classList.add("hidden");
-}
-
-function clearGrid(element) {
-  element.innerHTML = '';
+function clearGrid(grid) {
+  grid.innerHTML = '';
 }
 
 function removeUnmotivationalPoster(event) {
