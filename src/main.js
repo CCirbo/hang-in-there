@@ -1,28 +1,28 @@
-const posterImage = document.querySelector(".poster-img");
-const posterTitle = document.querySelector(".poster-title");
-const posterQuote = document.querySelector(".poster-quote");
-const showRandomPButton = document.querySelector(".show-random");
-const makeYourOPButton = document.querySelector(".show-form");
-const showSavedPButton = document.querySelector(".show-saved");
-const unmotivationalPButton = document.querySelector(".show-unmotivational")
-const saveThisPosterButton = document.querySelector(".save-poster");
-const mainPosterSite = document.querySelector(".main-poster");
+const posterImage = document.querySelector('.poster-img');
+const posterTitle = document.querySelector('.poster-title');
+const posterQuote = document.querySelector('.poster-quote');
+const showRandomPButton = document.querySelector('.show-random');
+const makeYourOPButton = document.querySelector('.show-form');
+const showSavedPButton = document.querySelector('.show-saved');
+const unmotivationalPButton = document.querySelector('.show-unmotivational')
+const saveThisPosterButton = document.querySelector('.save-poster');
+const mainPosterSite = document.querySelector('.main-poster');
 
-const makeYourOPForm = document.querySelector(".poster-form");
-const makeYourOPFormImage = document.querySelector("#poster-image-url");
-const makeYourOPFormTitle = document.querySelector("#poster-title" );
-const makeYourOPFormQuote = document.querySelector("#poster-quote");
-const showMyPosterFormButton = document.querySelector(".make-poster")
+const makeYourOPForm = document.querySelector('.poster-form');
+const makeYourOPFormImage = document.querySelector('#poster-image-url');
+const makeYourOPFormTitle = document.querySelector('#poster-title' );
+const makeYourOPFormQuote = document.querySelector('#poster-quote');
+const showMyPosterFormButton = document.querySelector('.make-poster')
 const nmindGoToMainPageFormButton = document.querySelector('.show-main');
 
-const savedPostersPage = document.querySelector(".saved-posters");
-const savedPostersGrid = document.querySelector(".saved-posters-grid");
+const savedPostersPage = document.querySelector('.saved-posters');
+const savedPostersGrid = document.querySelector('.saved-posters-grid');
 const savedPostersBackToMainButton = document.querySelector('.back-to-main');
 
 const unmotivationalBackToMainButton = document.querySelector('.unmotivational .back-to-main');
-const unmotivational = document.querySelector(".unmotivational");
-const unmotivationalGrid = document.querySelector(".unmotivational-posters-grid");
-const unmotivationalMiniPoster = document.querySelector(".unmotivational");
+const unmotivational = document.querySelector('.unmotivational');
+const unmotivationalGrid = document.querySelector('.unmotivational-posters-grid');
+const unmotivationalMiniPoster = document.querySelector('.unmotivational');
 
 
 let images = [
@@ -284,37 +284,14 @@ function displayRandomPoster() {
   currentPoster = newRandomPoster;
 }
 
+function updateCurrentPoster(newCreatedPoster) {
+  posterImage.src = newCreatedPoster.imageUrl
+  posterTitle.innerText = newCreatedPoster.title
+  posterQuote.innerText = newCreatedPoster.quote
+}
+
 function displayHiddenForm() {
   toggleViewOnOff(makeYourOPForm, mainPosterSite);
-}
-
-function displaySavedPoster() {
-  toggleViewOnOff(savedPostersPage, mainPosterSite);
-  clearGrid(savedPostersGrid);
-  creatingMiniPosters(savedPosters, savedPostersGrid);
-}
-
-function displayMainPosterSite() {
-  toggleViewOnOff(mainPosterSite, makeYourOPForm);
-}
-
-function displayMainPage() {
-  toggleViewOnOff(mainPosterSite, savedPostersPage);
-}
-
-function displayUMainPage() {
-  toggleViewOnOff(mainPosterSite, unmotivational);
-}
-
-function displayUnmotivationalPoster() {
-  toggleViewOnOff(unmotivational, mainPosterSite);
-  const cleanedUnmotivationalPosters = cleanData(unmotivationalPosters);
-  creatingMiniPosters(cleanedUnmotivationalPosters, unmotivationalGrid, true);
-}
-
-function toggleViewOnOff(showView, hideView) {
-  showView.classList.remove("hidden");
-  hideView.classList.add("hidden");
 }
 
 function createNewUserPoster() {
@@ -323,6 +300,7 @@ function createNewUserPoster() {
     makeYourOPFormTitle.value,
     makeYourOPFormQuote.value,
   );
+
   images.push(currentPoster.imageUrl);
   titles.push(currentPoster.title);
   quotes.push(currentPoster.quote);
@@ -334,13 +312,16 @@ function updateMainPosterSite() {
   updateCurrentPoster(currentPoster);
 }
 
-function updateCurrentPoster(newCreatedPoster) {
-  posterImage.src = newCreatedPoster.imageUrl
-  posterTitle.innerText = newCreatedPoster.title
-  posterQuote.innerText = newCreatedPoster.quote
+function displayMainPosterSite() {
+  toggleViewOnOff(mainPosterSite, makeYourOPForm);
 }
 
-function savePoster() {
+function toggleViewOnOff(showView, hideView) {
+  showView.classList.remove('hidden');
+  hideView.classList.add('hidden');
+}
+
+function savePoster(event) {
   let isDuplicate = savedPosters.some(function(poster) { 
     return (
       poster.imageUrl === currentPoster.imageUrl &&
@@ -348,29 +329,28 @@ function savePoster() {
       poster.quote === currentPoster.quote
     );
   });
+
   if (!isDuplicate) {
   savedPosters.push(currentPoster);
+  event.target.classList.toggle('purple')
   }
 }
 
-function cleanData(dataArray) {
-  const cleanedData = []
-  dataArray.forEach(function(data) {
-    const cleanedPoster = createPoster(
-      data.imageUrl || data.img_url,
-      data.title || data.name,
-      data.quote || data.description
-    );
-    cleanedData.push(cleanedPoster);
-  });
-  return cleanedData;
+function displaySavedPoster() {
+  toggleViewOnOff(savedPostersPage, mainPosterSite);
+  clearGrid(savedPostersGrid);
+  creatingMiniPosters(savedPosters, savedPostersGrid);
+}
+
+function clearGrid(grid) {
+  grid.innerHTML = '';
 }
 
 function creatingMiniPosters(array, grid, changeToGreyBackground = false) {
   array.forEach(function(poster) {
-    let backgroundClass = changeToGreyBackground ? "mini-poster-grey" : "";
+    let backgroundClass = changeToGreyBackground ? 'mini-poster-grey' : '';
     grid.insertAdjacentHTML(
-      "beforeend", 
+     'beforeend', 
      `<div class="mini-poster un-mini-poster ${backgroundClass}">
       <img src="${poster.imageUrl}" alt="${poster.title}">
       <h2>${poster.title}</h2>
@@ -379,15 +359,55 @@ function creatingMiniPosters(array, grid, changeToGreyBackground = false) {
   });
 }
 
-function clearGrid(grid) {
-  grid.innerHTML = '';
+function displayMainPage() {
+  toggleViewOnOff(mainPosterSite, savedPostersPage);
+}
+
+function displayUnmotivationalPoster() {
+  toggleViewOnOff(unmotivational, mainPosterSite);
+  clearGrid(unmotivationalGrid);
+  const cleanedUnmotivationalPosters = cleanData(unmotivationalPosters);
+  unmotivationalPosters = cleanedUnmotivationalPosters;
+  creatingMiniPosters(cleanedUnmotivationalPosters, unmotivationalGrid, true);
+}
+
+function cleanData(dataArray) {
+  const cleanedData = []
+
+  dataArray.forEach(function(data) {
+    const cleanedPoster = createPoster(
+      data.imageUrl || data.img_url,
+      data.title || data.name,
+      data.quote || data.description
+    );
+
+    cleanedData.push(cleanedPoster);
+  });
+
+  return cleanedData;
 }
 
 function removeUnmotivationalPoster(event) {
-  const poster = event.target.closest('.mini-poster');
-  if (poster) {
-    poster.remove();
+  const clickPoster = event.target.closest('.mini-poster');
+  if (!clickPoster) {
+    return
   }
+
+  const posterTitle = clickPoster.querySelector('h2').innerText;
+  unmotivationalPosters = unmotivationalPosters.filter((poster) => {
+    return poster.title !== posterTitle
+  });
+
+  clickPoster.remove();
 }
 
+function displayUMainPage() {
+  toggleViewOnOff(mainPosterSite, unmotivational);
+}
+
+// links for demo of make your own poster
 // https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg
+// https://media.wired.com/photos/5dbb44a56183ed0008252106/master/w_1600,c_limit/Cul-Terminator-phx03249rv2cr.jpg
+// Clarity
+// "Don't wait. The time will never be just right."
+
