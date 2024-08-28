@@ -32,7 +32,7 @@ ______________________________________________________
 
 ### Preview of App:
 [//]: <> (Provide ONE gif or screenshot of your application - choose the "coolest" piece of functionality to show off. gifs preferred!)
-  <img src = “hang-in-there.png" width = 500px>
+   <img src = "hang-in-there.png" width = 500px>
 ### Context:
 [//]: <> (Give some context for the project here. How long did you have to work on it? How far into the Turing program are you?)
 
